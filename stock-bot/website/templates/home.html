@@ -1,0 +1,73 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 style="text-align: center;font-family: 'Rockwell', sans-serif; font-size: 54px;">Dashboard</h1>
+<label 
+    for="balance" 
+    style="display: block;
+    text-align: center;
+    line-height: 150%; 
+    font-size: 20px; 
+    font-family: 'Courier New', Courier, monospace;"
+>Account Balance: ${{ user.balance }}</label>
+<label
+    style="display: block;
+    text-align: center;
+    line-height: 150%; 
+    font-size: 10px;"
+>*may take time to reflect sell orders on account balance*</label>
+
+<ul class="list-group list-group-flush" id="stocks">
+    {% for stock in user.stocks %}
+    {% if stock.quantity!=0 or stock.quantity>0 %}
+    <li 
+        style="border-radius: 25px;
+        border: 2px solid #21ada1;
+        font-family: 'Courier New', Courier, monospace;" 
+        class="list-group-item"
+    >
+    <span style="font-weight: bolder;">{{ stock.stock }}</span> 
+    <span>- {{ stock.quantity }}</span>
+    <span style="display: block;float:right;">{{ stock.date }}</span>
+    </li>
+    <br/>
+    {% endif %}
+    {% endfor %}
+</ul>
+<br/>
+<form method="POST">
+    <div class="form-group">
+        <label for="stock">Stock Name</label>
+        <input
+            type="text"
+            class="form-control"
+            id="stock"
+            name="stock"
+            placeholder="Enter ticker symbol in capitals"
+        />
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input
+            type="number"
+            class="form-control"
+            id="quantity"
+            name="quantity"
+            placeholder="Enter number of shares"
+        />
+    </div>
+    <div class="form-group">
+        <label for="side">Buy/Sell</label>
+        <input
+            type="text"
+            class="form-control"
+            id="side"
+            name="side"
+            placeholder="Enter order type"
+        />
+    </div>
+    <br />
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+    </div>
+</form>
+{% endblock %}
